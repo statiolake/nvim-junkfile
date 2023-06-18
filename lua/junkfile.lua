@@ -16,7 +16,7 @@ end
 
 function M.make_and_edit_temp(ext)
   local workdir = get_workspace_path()
-  if vim.fn.empty(workdir) then
+  if vim.trim(workdir) == '' then
     vim.api.nvim_echo({
       {
         'nvim-junkfile: Workspace path is not configured',
