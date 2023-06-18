@@ -3,7 +3,17 @@ local M = {}
 function M.setup(opts)
   M.opts = opts
   vim.api.nvim_create_user_command('Junkfile', function(o)
-    M.make_and_edit_temp(o.fargs)
+    local ext = o.fargs[1]
+    if not ext or vim.trim(ext) == '' then
+      vim.api.nvim_echo(
+        { { 'nvim-junkfile: extension not specified', 'ErrorMsg' } },
+        true,
+        {}
+      )
+      return
+    end
+
+    M.make_and_edit_temp(ext)
   end, {
     nargs = 1,
   })
