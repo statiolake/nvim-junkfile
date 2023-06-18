@@ -2,6 +2,11 @@ local M = {}
 
 function M.setup(opts)
   M.opts = opts
+  vim.api.nvim_create_user_command('Junkfile', function(o)
+    M.make_and_edit_temp(o.fargs)
+  end, {
+    nargs = 1,
+  })
 end
 
 local function get_workspace_path()
@@ -10,7 +15,7 @@ local function get_workspace_path()
 end
 
 function M.make_and_edit_temp(ext)
-  local workdir = M.get_workspace_path()
+  local workdir = get_workspace_path()
   if vim.fn.empty(workdir) then
     vim.api.nvim_echo({
       {
