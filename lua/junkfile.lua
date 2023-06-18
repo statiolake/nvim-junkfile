@@ -22,7 +22,7 @@ function M.make_and_edit_temp(ext)
         'nvim-junkfile: Workspace path is not configured',
         'ErrorMsg',
       },
-    }, true)
+    }, true, {})
     return
   end
 
