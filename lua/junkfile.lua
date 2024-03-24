@@ -36,16 +36,17 @@ function M.make_and_edit_temp(ext)
   local filename = string.format('junk_%s.%s', vim.fn.strftime '%H%M%S', ext)
   local path = vim.fn.expand(string.format('%s/%s', workdir, filename))
 
-  -- Edit within the current buffer if current buffer is empty. Open new tab
-  -- otherwise.
+  -- Save current buffer contents as a junk file if the current buffer is
+  -- unnamed. Otherwise, open a new empty buffer for the junk file.
   local edit_command
-  if vim.fn.expand '%' == '' and vim.opt.filetype == '' then
-    edit_command = 'edit'
+  if vim.fn.expand '%' == '' and vim.opt.filetype:get() == '' then
+    edit_command = 'file'
   else
     edit_command = 'tabnew'
   end
 
   vim.cmd[edit_command](path)
+  vim.cmd.filetype 'detect'
 end
 
 return M
