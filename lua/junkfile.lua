@@ -5,10 +5,9 @@ function M.setup(opts)
   vim.api.nvim_create_user_command('Junkfile', function(o)
     local ext = o.fargs[1]
     if not ext or vim.trim(ext) == '' then
-      vim.api.nvim_echo(
-        { { 'nvim-junkfile: extension not specified', 'ErrorMsg' } },
-        true,
-        {}
+      vim.notify(
+        'nvim-junkfile: extension not specified',
+        vim.log.levels.ERROR
       )
       return
     end
@@ -27,12 +26,10 @@ end
 function M.make_and_edit_temp(ext)
   local workdir = get_workspace_path()
   if vim.trim(workdir) == '' then
-    vim.api.nvim_echo({
-      {
-        'nvim-junkfile: Workspace path is not configured',
-        'ErrorMsg',
-      },
-    }, true, {})
+    vim.notify(
+      'nvim-junkfile: Workspace path is not configured',
+      vim.log.levels.ERROR
+    )
     return
   end
 
